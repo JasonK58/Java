@@ -23,12 +23,12 @@ import java.util.Scanner;
  * @version 1.0
  */
 public class Data {
-	/**
-	 * <p>Multiplier to turn a decimal into a percent.</p>
-	 */
-	private static final int MULTIPLIER = 100;
+    /**
+    * <p>Multiplier to turn a decimal into a percent.</p>
+    */
+    private static final int MULTIPLIER = 100;
 	
-	/**
+    /**
      * <p>One member household.</p>
      */
     private static final int HOUSEHOLD_MEMBERS_1 = 1;
@@ -103,54 +103,52 @@ public class Data {
      */
     private Hashtable<Integer, Integer> incomeCutoff;
     
-	/**
-	 * <p>
-	 * ArrayList holding the household information.
-	 * </p>
-	 */
-	static ArrayList<Household> houseArray = new ArrayList<Household>();
+    /**
+     * <p>
+     * ArrayList holding the household information.
+     * </p>
+     */
+    static ArrayList<Household> houseArray = new ArrayList<Household>();
 	
-	/**
-	 * <p>Console object.</p>
-	 */
-	static Console console = new Console();
+    /**
+     * <p>Console object.</p>
+     */
+    static Console console = new Console();
 	
-	/**
-	 * <p>Opens a file from a sub-folder inside a root folder.</p>
-	 * 
-	 * @param root root folder
-	 * @param sub sub folder
-	 * @param file file
-	 * @return file surveyFile
-	 */
-	public File openFile(String root, String sub, String file) {
-		File surveyFile = new File(root + File.separator + sub + File.separator
-				+ file);
-		return surveyFile;
+    /**
+     * <p>Opens a file from a sub-folder inside a root folder.</p>
+     * 
+     * @param root root folder
+     * @param sub sub folder
+     * @param file file
+     * @return file surveyFile
+     */
+    public File openFile(String root, String sub, String file) {
+        File surveyFile = new File(root + File.separator + sub + File.separator
+		+ file);
+	return surveyFile;
+    }
+	
+    /**
+     * <p>Creates household objects from a file.</p>
+     * 
+     * @param file file to be read
+     */
+    public void createHouseholds(Scanner file) {
+	try {
+	    while (file.hasNext()) {
+		Household object = new Household(file.nextInt(),
+		    file.nextInt(), file.nextInt());
+		houseArray.add(object);
+	    }
+	} catch (NoSuchElementException e) {
+		    console.displayError();
+	    }
 	}
 	
-	/**
-	 * <p>Creates household objects from a file.</p>
-	 * 
-	 * @param file file to be read
-	 */
-	public void createHouseholds(Scanner file) {
-
-		try {
-			while (file.hasNext()) {
-				Household object = new Household(file.nextInt(),
-						file.nextInt(), file.nextInt());
-				houseArray.add(object);
-			}
-		} catch (NoSuchElementException e) {
-			console.displayError();
-		}
-		
-	}
-	
-	/**
-	 * <p>Creates a Hashtable of income thresholds.</p>
-	 */
+    /**
+     * <p>Creates a Hashtable of income thresholds.</p>
+     */
     void createHashtable() {
     	incomeCutoff = new Hashtable<Integer, Integer>();
     	
@@ -163,31 +161,30 @@ public class Data {
     	incomeCutoff.put(HOUSEHOLD_MEMBERS_7, CASE_7_INCOME);
     }
 	
-	/**
-	 * <p>Calculate the total income of the households.</p>
-	 * 
-	 * @return totalIncome
-	 */
-	public double totalIncome() {
-		double totalIncome = 0;
+    /**
+     * <p>Calculate the total income of the households.</p>
+     * 
+     * @return totalIncome
+     */
+    public double totalIncome() {
+	double totalIncome = 0;
 		
-		for (Household object : houseArray) {
+	for (Household object : houseArray) {
             totalIncome += object.getIncome();
         }
-		return totalIncome;
-		
-	}
+	return totalIncome;	
+    }
 	
-	/**
-	 * <p>Calculates the average income of the total households.</p>
-	 * 
-	 * @return average income
-	 */
-	public double average() {
-		double totalIncome = totalIncome();
-		double size = houseArray.size();
-		return (totalIncome / size);
-	}
+    /**
+     * <p>Calculates the average income of the total households.</p>
+     * 
+     * @return average income
+     */
+     public double average() {
+	double totalIncome = totalIncome();
+	double size = houseArray.size();
+	return (totalIncome / size);
+    }
 	
 	/**
 	 * <p>Displays the households with above average income.</p>
