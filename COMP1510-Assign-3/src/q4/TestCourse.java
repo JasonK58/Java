@@ -1,78 +1,84 @@
 package q4;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
-
-import q3.Address;
 import q3.Student;
 
 /**
- * <p>This class adds students to a course, lists the names of the students
- *  and the class average for all the tests taken.</p>
+ * <p>Driver class adds students to a course, lists the 
+ * names of the students and the class average for 
+ * all tests taken.</p>
  *
  * @author Jason Kolenosky
- * @version 1.0
+ * @version 2.0
  */
 public class TestCourse {
 
     /**
-     * <p>Empty student object.</p>
+     * <p>Student object.</p>
      */
-    private static Student object;
+    private static Student student;
+    
+    /**
+     * <p>Scanner object.</p>
+     */
+    static Scanner input;
+    
+    /**
+     * Data object to manipulate information.</p>
+     */
+    private static Data data = new Data();
+    
+    /**
+     * Console object to display information.</p>
+     */
+    private static Console console = new Console();
 
     /**
-     * <p>The main method for the course.</p>
+     * <p>The main method for the course program.</p>
      *
-     * @param args command line arguments.
+     * @param args unused
      * @throws FileNotFoundException File not found exception.
      */
     public static void main(String[] args) throws FileNotFoundException {
-
-        File file = new File("src" + File.separator + "q4" + File.separator
-                + "studentInfo.txt");
-
-        Scanner input = new Scanner(file);
-
+    	double classAverage = 0; 
+    	
+    	//Create file.
+        try {
+            input = new Scanner(data.openFile("src", "q4", "studentInfo.txt"));
+        } catch (FileNotFoundException e) {
+            console.fileNotFound();
+        }
+        
+        //Create new course.
         Course myCourse = new Course("Math");
-
+        
+        //Add students to course.
         while (input.hasNext()) {
-
             input.useDelimiter(",");
-
             try {
-                Address homeAddress = new Address(input.next(), input.next(),
-                        input.next(), input.next());
-                Address schoolAddress = new Address(input.next(), input.next(),
-                        input.next(), input.next());
-                object = new Student(input.next(), input.next(), homeAddress,
-                        schoolAddress, input.nextDouble(), input.nextDouble(),
-                        Double.parseDouble(input.next()));
+            	student = data.createStudent(input);
             } catch (NoSuchElementException e) {
-                System.out.println("There is no not enough information to "
-                        + "add an additional student.\nCheck your file.\n");
+                console.informationError();
                 break;
             } catch (NumberFormatException e) {
-                System.out.println("The test result you entered is not valid."
-                        + " The student has not been added." 
-                        + "\nCheck your file.\n");
+                console.invalidTest();
                 break;
             }
 
             try {
-                myCourse.addStudent(object);
+                data.addStudent(student, myCourse);
             } catch (ArrayIndexOutOfBoundsException e) {
-                System.out
-                        .println("The array is not large enough "
-                                + "to add another student.\n");
+                console.arraySizeError();
             }
         }
+        
+        //Display students registered in course.
+        console.displayStudents(myCourse.rollCall());
+        classAverage = data.classAverage(myCourse);
+        console.displayClassAverage(classAverage);
 
-        myCourse.roll();
-        System.out.println("The class average is: "
-                + Math.round(myCourse.average()) + "%\n");
-        System.out.println("Question four was called and ran sucessfully.");
         input.close();
     }
 };

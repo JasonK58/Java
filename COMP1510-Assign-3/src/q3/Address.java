@@ -47,11 +47,7 @@ public class Address {
      * @return formatted value of address information.
      */
     public String toString() {
-        String result;
-
-        result = streetAddress + "\n";
-        result += city + ", " + province + "  " + postalCode;
-
-        return result;
+        return streetAddress + "\n"
+        		+ city + ", " + province + "  " + postalCode;
     }
 }

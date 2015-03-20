@@ -1,11 +1,10 @@
 package q4;
 
 import java.util.ArrayList;
-
 import q3.Student;
 
 /**
- * <p>Course constructor that is created using a name paramater.<p>
+ * <p>Course constructor that is created using a name parameter.<p>
  * <p>This class uses the following methods:</p>
  * <ul>
  * <li>Add students to the course.</li>
@@ -14,20 +13,9 @@ import q3.Student;
  * </ul>
  * 
  * @author Jason Kolenosky
- * @version 1.0
+ * @version 2.0
  */
 public class Course {
-    
-    /**
-     * <p>Maximum number of students allowed in course.</p>
-     */
-    private static final int MAX = 5;
-    
-    /**
-     * <p>Number of tests each student has taken.</p>
-     */
-    private static final int TESTS = 3;
-    
     /**
      * <p>Course name.</p>
      */
@@ -36,27 +24,12 @@ public class Course {
     /**
      * <p>Arraylist of students taking the course.</p>
      */
-    private ArrayList<Student> students;
+    ArrayList<Student> students;
 
     /**
-     * <p>Total of all the students' test scores.</p>
-     */
-    private double wholeTotal;
-
-    /**
-     * <p> Amount of students that are in the array.</p>
-     */
-    private int studentAmount;
-    
-    /**
-     * <p>Total number of tests taken for all students.</p>
-     */
-    private int numTests;
-
-    /**
-     * <p>Course constructor with only name as parameter.<.p>
+     * <p>Course constructor.</p>
      * 
-     * @param name Course name.
+     * @param name Course name
      */
     public Course(String name) {
         courseName = name;
@@ -64,41 +37,16 @@ public class Course {
     }
 
     /**
-     * <p>Adds student to the course.</p>
-     * 
-     * @param student Student to be added.
-     */
-    public void addStudent(Student student) {
-        if (studentAmount < MAX) {
-            students.add(student);
-            studentAmount++;
-        } else {
-            throw new ArrayIndexOutOfBoundsException();
-        }  
-    }
-
-    /**
-     * <p>Average test scores for all students.</p>
-     * 
-     * @return classAverage
-     */
-    public double average() {
-        for (Student object : students) {
-            wholeTotal += object.getTestScoreTotal();
-            numTests += TESTS;
-        }
-        double classAverage = wholeTotal / numTests;
-        return classAverage;
-    }
-
-    /**
      * <p>Prints the names of the students in the course.</p>
      */
-    public void roll() {
+    public String rollCall() {
+    	String studentList = "";
+    	
         System.out.print("Students Registered in " + courseName + "\n");
         for (Student object : students) {
-            System.out.println(object.getName());
+            studentList += object.getName() + "\n";
         }
-        System.out.println();
+        
+        return studentList;
     }
 }

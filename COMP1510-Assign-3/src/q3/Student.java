@@ -7,32 +7,36 @@ import java.util.InputMismatchException;
  * <p>This class creates student objects. 
  * The following constructors are used:</p>
  *<ul>
- *<li>When test scores are entered or not entered</li>
+ *<li>When test scores are entered or not entered.</li>
  *<li>Default constructor with no parameters.</li>
  *</ul>
  *
  *<p>The class also uses the following methods:</p>
  *<ul>
  *<li>Getters and setters for test scores.</li>
- *<li>Average calculator.</li>
  *<li>Student descriptor.</li>
  *</ul>
  *
  * @author Jason Kolenosky
- * @version 1.0
+ * @version 2.0
  */
 public class Student {
 
+	/**
+     * <p>Test number 1.</p>
+     */
+    private static final int TEST_NUM_1 = 1;
+    
+	/**
+     * <p>Test number 2.</p>
+     */
+    private static final int TEST_NUM_2 = 2;
+    
     /**
      * <p>Test number 3.</p>
      */
-    private static final int TEST3 = 3;
-    
-    /**
-     * <p>Number of tests for each student.</p>
-     */
-    private static final int NUM_TESTS = 3;
-    
+    private static final int TEST_NUM_3 = 3;
+
     /** 
      * <p>First name of this student.</p>
      */
@@ -56,32 +60,17 @@ public class Student {
     /**
      * <p>Test one score.</p>
      */
-    private double test1;
+    double test1;
     
     /**
      * <p>Test two score.</p>
      */
-    private double test2;
+    double test2;
     
     /**
      * <p>Test three score.</p>
      */
-    private double test3;
-    
-    /**
-     * <p>Average of the three test scores.</p>
-     */
-    private double average;
-    
-    /**
-     * <p>Student descriptor.</p>
-     */
-    private String result;
-    
-    /**
-     * <p>Total of the test scores added together.</p>
-     */
-    private double scoreTotal;
+    double test3;
 
     /**
     * <p>Constructor: Sets up this student with the specified values.</p>
@@ -173,19 +162,21 @@ public class Student {
     }
     
     /**
-     * <p>Test score setter.</p>
+     * <p>Test score setter.
+     * Note: Since it's a small switch it should be OK.</p>
+     * 
      * @param test test number
      * @param testScore test score
      */
     public void setTestScore(int test, double testScore) {
         switch (test) {
-        case 1:
+        case TEST_NUM_1:
             this.test1 = testScore;
             break;
-        case 2:
+        case TEST_NUM_2:
             this.test2 = testScore;
             break;
-        case TEST3:
+        case TEST_NUM_3:
             this.test3 = testScore;
             break;
         default:
@@ -194,42 +185,23 @@ public class Student {
     }
     
     /**
-     * <p>Getter for test scores.</p>
+     * <p>Getter for test scores.
+     * Note: Since it's a small switch it should be OK.</p>
      * 
      * @param test test number
      * @return score
      */
     public double getTestScore(int test) {
         switch (test) {
-        case 1:
+        case TEST_NUM_1:
             return this.test1;
-        case 2:
+        case TEST_NUM_2:
             return this.test2;
-        case TEST3:
+        case TEST_NUM_3:
             return this.test3;
         default:
             throw new InputMismatchException();
         }
-    }
-    
-    /**
-     * <p>Gets the total of the three test scores.</p>
-     * 
-     * @return scoreTotal
-     */
-    public double getTestScoreTotal() {
-        scoreTotal = this.test1 + this.test2 + this.test3;
-        return scoreTotal;
-    }
-    
-    /**
-     * <p>Calculates the average of the three tests.</p>
-     * 
-     * @return average
-     */
-    public double average() {
-        average = (this.getTestScoreTotal() / NUM_TESTS);
-        return average;
     }
 
     /**
@@ -238,14 +210,11 @@ public class Student {
     * @return formatted name and addresses of student
     */
     public String toString() {
-        result = firstName + " " + lastName + "\n";
-        result += "Home Address:\n" + homeAddress + "\n";
-        result += "School Address:\n" + schoolAddress + "\n";
-        result += "Test score 1: " + getTestScore(1) + "\n";
-        result += "Test score 2: " + getTestScore(2) + "\n";
-        result += "Test score 3: " + getTestScore(TEST3) + "\n";
-        result += "Average of test scores: " + Math.round(average()) + "%\n";
-
-        return result;
+        return firstName + " " + lastName + "\n"
+        		+ "Home Address:\n" + homeAddress + "\n"
+        		+ "School Address:\n" + schoolAddress + "\n"
+        		+ "Test score 1: " + getTestScore(TEST_NUM_1) + "\n"
+        		+ "Test score 2: " + getTestScore(TEST_NUM_2) + "\n"
+        		+ "Test score 3: " + getTestScore(TEST_NUM_3);
     }
 }

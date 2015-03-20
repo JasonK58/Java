@@ -3,7 +3,7 @@ package q3;
 import java.util.InputMismatchException;
 
 /**
- * <p>This class creates student object. 
+ * <p>Driver class that creates student objects. 
  * The following conditions are tested:</p>
  * <ul>
  * <li>Creating a student with no test scores.</li>
@@ -13,10 +13,9 @@ import java.util.InputMismatchException;
  * </ul>
  *
  * @author Jason Kolenosky
- * @version 1.0
+ * @version 2.0
  */
 public class TestStudent {
-
     /**
      * <p>Student1, test1 score.</p>
      */
@@ -53,9 +52,19 @@ public class TestStudent {
     private static final double STUDENT1_NEW_TEST1 = 100;
     
     /**
+     * <p>Test number 1.</p>
+     */
+    private static final int TEST_ONE = 1;
+    
+    /**
+     * <p>Test number 2.</p>
+     */
+    private static final int TEST_TWO = 2;
+    
+    /**
      * <p>Test number 3.</p>
      */
-    private static final int TEST_NUMBER = 3;
+    private static final int TEST_THREE = 3;
     
     /**
      * <p>Student object for student 1.</p>
@@ -68,12 +77,21 @@ public class TestStudent {
     private static Student student2;
     
     /**
+     * <p>Displays output to the console.</p>
+     */
+    private static Console console = new Console();
+    
+    /**
+     * <p>Conducts calculations on test scores.</p>
+     */
+    private static Calculations calculations = new Calculations();
+    
+    /**
      * <p>The main method for the student constructor testing.</p>
      *
      * @param args unused
      */
     public static void main(String[] args) {
-
         //Addresses for student1.
         Address student1Home = new Address("111 Here St.", "Surrey", 
                 "BC", "H0H 0H0");
@@ -89,52 +107,47 @@ public class TestStudent {
         //Student constructor without test scores.
         student1 = new Student("Jason", "Kolenosky", 
                 student1Home, student1School);
-        System.out.println("Student constructor without test scores:\n");
-        System.out.println(student1);
+        console.constWithoutTestHeader();
+        console.displayStudent(student1);
         
         //Student constructor with test scores.
         student1 = new Student("Joe", "Dirt", 
                 student1Home, student1School, STUDENT1_TEST1, STUDENT1_TEST2, 
                 STUDENT1_TEST3);
-        System.out.println("Student constructor with test scores:\n");
-        System.out.println(student1);
+        console.constWithTestHeader();
+        console.displayStudent(student1);
+        console.displayAverage(calculations.average(student1));
         
+        //Display and alter a test score.
         try {
-            System.out.println("The test 1 score for student1 is: " 
-                    + student1.getTestScore(1) + "%\n"); 
+        	console.displayTestScore(TEST_ONE, student1);
         } catch (InputMismatchException e) {
-            System.out.println("That is not a valid test number."
-                    + " Could not get test.\n");
+            console.invalidTestRetrieve();
         }
         
         try {
-            student1.setTestScore(1, STUDENT1_NEW_TEST1); 
+            student1.setTestScore(TEST_ONE, STUDENT1_NEW_TEST1); 
         } catch (InputMismatchException e) {
-            System.out.println("That is not a valid test number. "
-                    + "No changes have been made.\n");
+            console.invalidTestAlter();
         }
         
         try {
-            System.out.println("The new test 1 score for student1 is: " 
-                    + student1.getTestScore(1) + "%\n");
+        	console.displayAlteredTestScore(TEST_ONE, student1);
         } catch (InputMismatchException e) {
-            System.out.println("That is not a valid test number."
-                    + " Could not get test.\n");
+        	console.invalidTestRetrieve();
         }
         
-        //Default student constructor.
+        //Default student constructor and setters test.
         student2 = new Student();
         student2.setFirstName("Bob");
         student2.setLastName("Ross");
         student2.setHomeAddress(student2Home);
         student2.setSchoolAddress(student2School);
-        student2.setTestScore(1, STUDENT2_TEST1);
-        student2.setTestScore(2, STUDENT2_TEST2);
-        student2.setTestScore(TEST_NUMBER, STUDENT2_TEST3);
-        System.out.println("Zero paramater student constructor "
-                + "using setters:\n");
-        System.out.println(student2);
-        
-        System.out.println("Question three was called and ran sucessfully.");
+        student2.setTestScore(TEST_ONE, STUDENT2_TEST1);
+        student2.setTestScore(TEST_TWO, STUDENT2_TEST2);
+        student2.setTestScore(TEST_THREE, STUDENT2_TEST3);
+        console.zeroConstructorHeader();
+        console.displayStudent(student2);
+        console.displayAverage(calculations.average(student2));
     }
 };
