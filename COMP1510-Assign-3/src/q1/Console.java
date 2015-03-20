@@ -11,6 +11,7 @@ public class Console implements Output {
 	/**
 	 * <p>Displays error message.</p>
 	 */
+	 @Override
 	public void displayError() {
 		System.out.println("There was either not enough information to "
 				+ "enter another\nhousehold or the information was not "
